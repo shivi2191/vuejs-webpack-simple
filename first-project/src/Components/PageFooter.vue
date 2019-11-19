@@ -2,28 +2,36 @@
     <div class="col-xs-12">
         <footer>
             <p id="idFooter" class="classfooter">{{customFooter}}</p>
-            <button @click="reverse">Reverse the Text</button>
+           
+            <p>{{headerText}}</p>
         </footer>
     </div>
 </template>
 <script>
+import { EventBus } from "../main"; 
 export default {
-    // data(){
-    //     return {
-    //         footerMessage : "All Servers are managed here!"
-    //     }
-    // },
+    data(){
+        return {
+            headerText : ""
+        }
+    },
     props: {
         customFooter: {
             type: String,
-            required: true,
             value: ""
         }
     },
+    created(){
+            debugger;
+            EventBus.$on('emittedValue', (value)=>{
+                debugger
+                this.headerText = value;
+            });
+        },
     methods: {
         reverse(){
             this.value = "This is a custom Footer Message!"
-            this.$emit('customEvent', this.value)
+           // this.$emit('customEvent', this.value)
         }
     }
 }
