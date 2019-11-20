@@ -5,7 +5,6 @@
             <my-server-list></my-server-list>
         <hr>
             <my-footer></my-footer>
-            <button @click="changeFooterMsg">Change the Footer Message</button>
     </div>
 </template>
 
@@ -26,9 +25,6 @@ import PageFooter from "./Components/PageFooter.vue"
             };
         }, 
         methods: {
-            changeFooterMsg () {
-                this.customFooterText = "Here's a new custom Footer!!"
-            }
         }
     }
 </script>

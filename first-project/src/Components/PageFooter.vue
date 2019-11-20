@@ -1,18 +1,23 @@
 <template>
     <div class="col-xs-12">
-        <footer>
-            <p id="idFooter" class="classfooter">{{customFooter}}</p>
-           
-            <p>{{headerText}}</p>
-        </footer>
+        <h1>Server Details</h1>
+        <div>
+            <my-server-detail :details="detail"></my-server-detail>
+            <button @click="changeStatus">Change Server Status</button>
+        </div>
     </div>
 </template>
 <script>
-import { EventBus } from "../main"; 
+import { EventBus } from "../main";
+import ServerDetail from "./ServerDetail"
 export default {
+    components: {
+        myServerDetail: ServerDetail
+    },
     data(){
         return {
-            headerText : ""
+            headerText : "",
+            detail: {}
         }
     },
     props: {
@@ -22,16 +27,25 @@ export default {
         }
     },
     created(){
-            debugger;
             EventBus.$on('emittedValue', (value)=>{
-                debugger
                 this.headerText = value;
             });
+
+            EventBus.$on('serverDetail', (serverData)=>{
+                this.detail = serverData;
+            })
         },
     methods: {
         reverse(){
             this.value = "This is a custom Footer Message!"
            // this.$emit('customEvent', this.value)
+        },
+        changeStatus() {
+            if(this.detail.serverStatus===undefined){
+                alert('No Details found!')
+                return false;
+            }
+            this.detail.serverStatus = "Normal";
         }
     }
 }
